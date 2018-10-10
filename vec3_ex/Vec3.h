@@ -1,6 +1,7 @@
-#include <math.h>
 #ifndef VEC3_H_
 #define VEC3_H_
+
+#include <math.h>
 
 template<class T>
 class Vec3
@@ -11,8 +12,8 @@ public:
 	Vec3();
 	Vec3(T x,T y,T z);
 
-	Vec3<T> operator+(const Vec3<T>& other) const;
-	Vec3<T> operator=(const Vec3<T>& other);
+	Vec3<T>& operator+(const Vec3<T>& other) const;
+	Vec3<T>& operator=(const Vec3<T>& other);
 
 	void Normalize();
 	double distance_to(const Vec3<T>& other) const;
@@ -21,24 +22,20 @@ public:
 };
 
 template<class T>
-inline Vec3<T>::Vec3(): x(0), y(0), z(0)
+inline Vec3<T>::Vec3() : x(0), y(0), z(0) {}
+
+template<class T>
+inline Vec3<T>::Vec3(T x, T y, T z) : x(x), y(y), z(z){}
+
+template<class T>
+inline Vec3<T>& Vec3<T>::operator+(const Vec3<T>& other) const
 {
+	Vec3<T> *vec = new Vec3<T>(x + other.x, y + other.y, z + other.z);
+	return *vec;
 }
 
 template<class T>
-inline Vec3<T>::Vec3(T x, T y, T z) : x(x), y(y), z(z)
-{
-
-}
-
-template<class T>
-inline Vec3<T> Vec3<T>::operator+(const Vec3<T>& other) const
-{
-	return Vec3(this->x + other.x, this->y + other.y , this->z + other.z);
-}
-
-template<class T>
-inline Vec3<T> Vec3<T>::operator=(const Vec3<T>& other)
+inline Vec3<T>& Vec3<T>::operator=(const Vec3<T>& other)
 {
 	if (this != &other)
 	{
